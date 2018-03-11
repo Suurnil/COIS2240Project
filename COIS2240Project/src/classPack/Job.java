@@ -1,3 +1,4 @@
+package classPack;
 public class Job {
 
 	private double payRate;
