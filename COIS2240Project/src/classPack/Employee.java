@@ -4,10 +4,23 @@ import java.time.*;
 
 public class Employee extends User {
 
-	private LocalTime startTime = null;
-	private double recHours;
-	private double recHoursTotal;
+	private LocalDateTime startTime = null;
+	private double recHours = 0;
+	private double recHoursTotal = 0;
 	private Job job;
+
+	public Employee(){
+	}
+	
+	public Employee(int idNum, String givenName, String surname, Job job) {
+		super(idNum, givenName, surname);
+		this.job = job;
+	}
+
+	public Employee(Job job) {
+		super();
+		this.job = job;
+	}
 
 	public double getRecHours() {
 		return recHours;
@@ -33,11 +46,11 @@ public class Employee extends User {
 		this.job = job;
 	}
 
-	public LocalTime getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 	
-	protected void setStartTime(LocalTime startTime){
+	protected void setStartTime(LocalDateTime startTime){
 		this.startTime = startTime;
 	}
 
@@ -47,11 +60,35 @@ public class Employee extends User {
 	 */
 
 	public void startShift() {
-		setStartTime(LocalTime.now());
+		setStartTime(LocalDateTime.now());
 	}
 
 	public void endShift() {
-		endShift(this, LocalTime.now());
+		endShift(LocalDateTime.now());
 	}
 
+	protected void endShift(LocalDateTime endTime) {
+		/*
+		 * use to end a shift for employee at specified time check if there is a
+		 * startTime gets workTime & converts to double hoursWorked increments
+		 * recHours and recHoursTotal by hoursWorked0ooo
+		 */
+		if (getStartTime() != null) { // when there is a startTime
+			Duration workTime = Duration.between(getStartTime(),
+					endTime); /* Duration class from java.time */
+			double hoursWorked = (workTime.toMinutes()) / 60.0;
+			/*
+			 * gets minutes of workTime then converts as Duration.toHours()
+			 * doesn't account for minutes over the hours
+			 */
+			setRecHours(getRecHours() + hoursWorked);
+			setRecHoursTotal(getRecHoursTotal() + hoursWorked);
+			setStartTime(null);
+			/*
+			 * shift is over, so there is no longer a startTime
+			 */
+		} else {
+			System.out.println("Shift was not started");
+		}
+	}
 }
