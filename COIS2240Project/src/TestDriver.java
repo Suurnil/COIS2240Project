@@ -1,8 +1,6 @@
 import java.time.*;
 
-import classPack.Administrator;
-import classPack.Employee;
-import classPack.Job;
+import punchClock.*;
 
 public class TestDriver {
 
@@ -10,14 +8,9 @@ public class TestDriver {
 
 		
 		Administrator admin = new Administrator();
-		Employee emp = new Employee(new Job(10, 40, 1.5, 20, 10, "Title"));
+		Employee emp = new Employee(new Job(13.6, 10, 1.5*13.6, 20, 10, "Title"));
 		
-		Employee emp2 = new Employee(emp.getJob());
-		
-		System.out.println(emp.getJob().getPayRate());
-		System.out.println(emp2.getJob().getPayRate());
-
-		
+		System.out.println(emp.getJob().getPayRate());	
 		
 		admin.startShift(emp, LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 30)));
 		System.out.println(emp.getStartTime());
@@ -27,10 +20,9 @@ public class TestDriver {
 		
 		System.out.println(emp.getStartTime());
 		
-		emp.getJob().setPayRate(5.6);
+		System.out.println(emp.calcPay());
 		
 		System.out.println(emp.getJob().getPayRate());
-		System.out.println(emp2.getJob().getPayRate());
 
 
 

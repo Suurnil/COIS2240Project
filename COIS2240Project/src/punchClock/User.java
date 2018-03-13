@@ -1,6 +1,4 @@
-package classPack;
-
-import java.time.*;
+package punchClock;	//Separate package for class to restrict access to certain methods for outside classes
 
 public abstract class User {
 
@@ -36,12 +34,4 @@ public abstract class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
-	/*
-	 * protected access modifier limits usage to classes in classPack Employee
-	 * can use startShift(Employee) Main cannot use
-	 * Employee.startShift(Employee) Main must use Employee.startShift() instead
-	 */
-
-	
 }
