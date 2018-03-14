@@ -6,9 +6,6 @@ public abstract class User {
 	private String givenName;
 	private String surname;
 
-	public User() {
-	}
-
 	public User(int idNum, String givenName, String surname) {
 		this.idNum = idNum;
 		this.givenName = givenName;

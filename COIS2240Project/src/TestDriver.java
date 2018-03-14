@@ -7,8 +7,8 @@ public class TestDriver {
 	public static void main(String[] args) {
 
 		
-		Administrator admin = new Administrator();
-		Employee emp = new Employee(new Job(13.6, 10, 1.5*13.6, 20, 10, "Title"));
+		Administrator admin = new Administrator(0, null, null);
+		Employee emp = new Employee(1, "givenName", "surname",  new Job(13.6, 10, 1.5*13.6, 20, 10, "Title"));
 		
 		System.out.println(emp.getJob().getPayRate());	
 		

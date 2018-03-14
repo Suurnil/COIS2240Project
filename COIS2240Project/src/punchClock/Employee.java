@@ -13,16 +13,14 @@ public class Employee extends User {
 	 * ******************************************************** 
 	 * Constructors
 	 ********************************************************/
-	public Employee() {
-	}
 
 	public Employee(int idNum, String givenName, String surname, Job job) {
 		super(idNum, givenName, surname);
 		this.job = job;
 	}
 
-	public Employee(Job job) {
-		super();
+	public Employee(User user, Job job) {
+		super(user.getIdNum(), user.getGivenName(), user.getSurname());
 		this.job = job;
 	}
 
@@ -40,50 +38,52 @@ public class Employee extends User {
 	}
 
 	public Job getJob() {
-		return job;	//this prevents Employee.job from being modified via Employee.getJob
+		return job;
 	}
 
 	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	/* ***************************************************************
+	/* *************************************************************************
 	 * Methods
-	 * ***************************************************************
-	 */
-	
-	public double calcPay(){
-		double pay = 0;
-		
-		if(recHours > job.getOvertimeHours()){
-			pay = (recHours - job.getOvertimeHours()) * job.getOvertimeRate();	//overtimeRate * hours over overtimeHours
-			pay += (job.getOvertimeHours() * job.getPayRate());	//regular rate for hours up to overtimeHours
-		}
-		else{
-			pay = recHours * job.getPayRate();
-		}
-		
-		return pay;
-	}
-
+	 * 
+	 * startShift()
+	 * 		start a shift at the current time
+	 * 
+	 * endShift()
+	 * 		end a shift at the current time
+	 * 
+	 * startShift(LocalDateTime startTime)
+	 * 		set startTime field
+	 * 
+	 * endShift(LocalDateTime endTime)
+	 * 		end a shift at the specified time
+	 * 		a shift must have a startTime to end
+	 * 		a shift ends by calculating the hours worked and recording them
+	 * 		the startTime is removed at the end of the shift
+	 * 
+	 * recordShift(LocalDateTime startTime, LocalDateTime endTime)
+	 * 		records a shift that was worked from startTime to endTime
+	 * 
+	 * calcPay()
+	 * 		calculates pay based on rate on pay and recorded hours
+	 * 		overtime hours are calculated at overtime rate
+	 * ************************************************************************* */
 	public void startShift() {
-		/*starts a shift at the current time*/
 		startShift(LocalDateTime.now());
 	}
 
 	public void endShift() {
-		/*ends a shift at the current time*/
 		endShift(LocalDateTime.now());
 	}
 
 	protected void startShift(LocalDateTime startTime) {
-		/*starts a shift at the specified time*/
 		this.startTime = startTime;
 	}
 
 	protected void endShift(LocalDateTime endTime) {
-		/*ends a shift at the specified time*/
-		if (startTime != null) { // checks if shift has been started
+		if (startTime != null && endTime.isAfter(startTime)) { // checks if shift has been started and endTime is after startTime
 			Duration workTime = Duration.between(getStartTime(),
 					endTime); /* Duration class from java.time */
 			double hoursWorked = (workTime.toMinutes()) / 60.0;
@@ -98,13 +98,26 @@ public class Employee extends User {
 			 * shift is over, so there is no longer a startTime
 			 */
 		} else {
-			System.out.println("Shift was not started");
+			System.out.println("Invalid startTime");	//would display in GUI
 		}
 	}
 	
 	protected void recordShift(LocalDateTime startTime, LocalDateTime endTime){
-		/*records a shift starting at startTime and ending at endTime*/
 		startShift(startTime);
 		endShift(endTime);
+	}
+	
+	public double calcPay(){
+		double pay = 0;
+		
+		if(recHours > job.getOvertimeHours()){
+			pay = (recHours - job.getOvertimeHours()) * job.getOvertimeRate();	//overtimeRate * hours over overtimeHours
+			pay += (job.getOvertimeHours() * job.getPayRate());	//regular rate for hours up to overtimeHours
+		}
+		else{
+			pay = recHours * job.getPayRate();
+		}
+		
+		return pay;
 	}
 }

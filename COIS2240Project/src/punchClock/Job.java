@@ -10,21 +10,21 @@ public class Job {
 
 	public Job(double payRate, double overtimeHours, double overtimeRate, double maxHours, double minHours,
 			String title) {
-		this.payRate = payRate;
-		this.overtimeHours = overtimeHours;
-		this.overtimeRate = overtimeRate;
-		this.maxHours = maxHours;
-		this.minHours = minHours;
-		this.title = title;
+		setPayRate(payRate);
+		setOvertimeHours(overtimeHours);
+		setOvertimeRate(overtimeRate);
+		setMaxHours(maxHours);
+		setMinHours(minHours);
+		setTitle(title);
 	}
 	
 	public Job(Job job){
-		this.payRate = job.getPayRate();
-		this.overtimeHours = job.getOvertimeHours();
-		this.overtimeRate = job.getOvertimeRate();
-		this.maxHours = job.getMaxHours();
-		this.minHours = job.getMinHours();
-		this.title = job.getTitle();
+		setPayRate(job.getPayRate());
+		setOvertimeHours(job.getOvertimeHours());
+		setOvertimeRate(job.getOvertimeRate());
+		setMaxHours(job.getMaxHours());
+		setMinHours(job.getMinHours());
+		setTitle(job.getTitle());
 	}
 
 	/* ***************************************************************
@@ -58,29 +58,56 @@ public class Job {
 
 	/* ***************************************************************
 	 * Setters
+	 * 
+	 * all numbers must be >= 0
+	 * minHours cannot be greater than maxHours
+	 * maxHours cannot be less than minHours
 	 * ***************************************************************
 	 */
 	
 	protected void setPayRate(double payRate) {
-		this.payRate = payRate;
+		if (payRate >= 0) {
+			this.payRate = payRate;
+		}
+		else{
+			this.payRate = 0;
+		}
 	}
 
 	protected void setOvertimeHours(double overtimeHours) {
 		this.overtimeHours = overtimeHours;
+		if (overtimeHours >= 0) {
+			this.overtimeHours = overtimeHours;
+		}
+		else{
+			this.overtimeHours = 0;
+		}
 	}
 
 	protected void setOvertimeRate(double overtimeRate) {
-		this.overtimeRate = overtimeRate;
+		if (overtimeRate >= 0) {
+			this.overtimeRate = overtimeRate;		}
+		else{
+			this.overtimeRate = 0;
+		}
 	}
 
 	protected void setMaxHours(double maxHours) {
-		if (this.minHours <= maxHours)
+		if (this.minHours <= maxHours && maxHours >= 0){
 			this.maxHours = maxHours;
+		}
+		else{
+			this.maxHours = this.minHours;
+		}
 	}
 
 	protected void setMinHours(double minHours) {
-		if (this.maxHours >= minHours)
+		if (this.maxHours >= minHours && minHours >= 0){
 			this.minHours = minHours;
+		}
+		else{
+			this.minHours = this.maxHours;
+		}
 	}
 
 	protected void setTitle(String title) {
