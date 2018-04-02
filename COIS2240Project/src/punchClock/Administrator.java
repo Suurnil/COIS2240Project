@@ -47,8 +47,8 @@ public class Administrator extends User {
 		return employee.calcPay();
 	}
 	
-	public Employee createEmployee(User user, Job job) {
-		return new Employee(user, job);
+	public Employee createEmployee(int idNum, String givenName, String surname, Job job) {
+		return new Employee(idNum, givenName, surname, job);
 	}
 	/* *************************************************************************
 	 * Job Methods

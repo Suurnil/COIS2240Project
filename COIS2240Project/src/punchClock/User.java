@@ -31,4 +31,32 @@ public abstract class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
+	protected void setIdNum(int idNum){
+		this.idNum = idNum;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (givenName == null) {
+			if (other.givenName != null)
+				return false;
+		} else if (!givenName.equals(other.givenName))
+			return false;
+		if (idNum != other.idNum)
+			return false;
+		if (surname == null) {
+			if (other.surname != null)
+				return false;
+		} else if (!surname.equals(other.surname))
+			return false;
+		return true;
+	}
 }

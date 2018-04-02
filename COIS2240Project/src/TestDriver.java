@@ -1,16 +1,19 @@
+import java.sql.SQLException;
 import java.time.*;
 
 import punchClock.*;
 
 public class TestDriver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
+		PunchClockDB db = new PunchClockDB();
+		
 		
 		Administrator admin = new Administrator(0, null, null);
 		Employee emp = new Employee(1, "givenName", "surname",  new Job(13.6, 10, 1.5*13.6, 20, 10, "Title"));
 		
-		System.out.println(emp.getJob().getPayRate());	
+		/*System.out.println(emp.getJob().getPayRate());	
 		
 		admin.startShift(emp, LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 30)));
 		System.out.println(emp.getStartTime());
@@ -22,7 +25,20 @@ public class TestDriver {
 		
 		System.out.println(emp.calcPay());
 		
-		System.out.println(emp.getJob().getPayRate());
+		System.out.println(emp.getJob().getPayRate());*/
+		
+		int i = db.getNewIDNum();
+		
+		db.addEmployee(emp);
+		
+		Employee newEmp = db.readEmployee(i);
+		
+		
+		System.out.println(i);
+		
+		System.out.println(newEmp.toString());
+		
+		db.closeConn();
 
 
 
