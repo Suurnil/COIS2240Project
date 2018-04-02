@@ -23,12 +23,21 @@ public class Employee extends User {
 		super(user.getIdNum(), user.getGivenName(), user.getSurname());
 		this.job = job;
 	}
+	
+	protected Employee(int idNum, String givenName, String surname, LocalDateTime startTime, double recHours,
+			double recHoursTotal, Job job) {
+		super(idNum, givenName, surname);
+		this.startTime = startTime;
+		this.recHours = recHours;
+		this.recHoursTotal = recHoursTotal;
+		this.job = job;
+	}
 
 	/* ***************************************************************
 	 * Getters
 	 * ***************************************************************
 	 */
-	
+
 	public double getRecHours() {
 		return recHours;
 	}
@@ -119,5 +128,39 @@ public class Employee extends User {
 		}
 		
 		return pay;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [startTime=" + startTime + ", recHours=" + recHours + ", recHoursTotal=" + recHoursTotal
+				+ ", job=" + job.toString() + ", idNum=" + getIdNum() + ", givenName=" + getGivenName()
+				+ ", surname=" + getSurname() + "]";
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (job == null) {
+			if (other.job != null)
+				return false;
+		} else if (!job.equals(other.job))
+			return false;
+		if (Double.doubleToLongBits(recHours) != Double.doubleToLongBits(other.recHours))
+			return false;
+		if (Double.doubleToLongBits(recHoursTotal) != Double.doubleToLongBits(other.recHoursTotal))
+			return false;
+		if (startTime == null) {
+			if (other.startTime != null)
+				return false;
+		} else if (!startTime.equals(other.startTime))
+			return false;
+		return true;
 	}
 }

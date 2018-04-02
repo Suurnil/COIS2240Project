@@ -110,7 +110,40 @@ public class Job {
 		}
 	}
 
-	protected void setTitle(String title) {
+	private void setTitle(String title) {
 		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		return "Job [payRate=" + payRate + ", overtimeHours=" + overtimeHours + ", overtimeRate=" + overtimeRate
+				+ ", maxHours=" + maxHours + ", minHours=" + minHours + ", title=" + title + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Job other = (Job) obj;
+		if (Double.doubleToLongBits(maxHours) != Double.doubleToLongBits(other.maxHours))
+			return false;
+		if (Double.doubleToLongBits(minHours) != Double.doubleToLongBits(other.minHours))
+			return false;
+		if (Double.doubleToLongBits(overtimeHours) != Double.doubleToLongBits(other.overtimeHours))
+			return false;
+		if (Double.doubleToLongBits(overtimeRate) != Double.doubleToLongBits(other.overtimeRate))
+			return false;
+		if (Double.doubleToLongBits(payRate) != Double.doubleToLongBits(other.payRate))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
 	}
 }
