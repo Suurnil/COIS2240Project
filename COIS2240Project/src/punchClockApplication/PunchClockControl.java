@@ -27,13 +27,30 @@ public class PunchClockControl {
 
 	Administrator admin = new Administrator();
 
+	Job job = new Job();
+
 	LoginNumBtnHandler loginNumBtnHandler = new LoginNumBtnHandler();
 
 	@FXML
 	private Label lblLogin;
 
 	@FXML
-	private TextField jobSearchTerm;
+	private TextField jobTitle;
+
+	@FXML
+	private TextField jobPayRate;
+
+	@FXML
+	private TextField jobOvertimeRate;
+
+	@FXML
+	private TextField jobOvertimeHours;
+
+	@FXML
+	private TextField jobMinHours;
+
+	@FXML
+	private TextField jobMaxHours;
 
 	@FXML
 	private TextField employeeSearchID;
@@ -216,10 +233,8 @@ public class PunchClockControl {
 	}
 
 	public void editJobDB() {
-		jobSearchResults.setText(null);
-		jobSearchTerm.setText(null);
-		;
 		showJobDBPage();
+		jobSearchResults.setText(Database.Read.searchJob());
 	}
 
 	public void login() {
@@ -278,17 +293,6 @@ public class PunchClockControl {
 		}
 	}
 
-	public void searchJobs() {
-
-		if (jobSearchTerm.getText() != null) {
-			jobSearchResults.setText(Database.Read.searchJob(jobSearchTerm.getText()));
-			// String test = "test";
-			// jobSearchResults.setText(jobSearchTerm.getText());
-		} else {
-			jobSearchResults.setText(Database.Read.searchJob());
-		}
-	}
-
 	public void newEmployee() {
 		employee = new Employee(0, employeeNewGivenName.getText(), employeeNewSurname.getText(),
 				new Job(employeeNewJob.getText()));
@@ -300,10 +304,32 @@ public class PunchClockControl {
 	public void editEmployee() {
 		employee = new Employee(Integer.parseInt(employeeSearchID.getText()), employeeUpdateGivenName.getText(),
 				employeeUpdateSurname.getText(), new Job(employeeUpdateJob.getText()));
-		
+
 		Database.Update.updateEmployee(employee);
-		
+
 		employeeSearchResults.setText(Database.Read.searchEmployee());
+	}
+
+	public void newJob() {
+		job = new Job(Double.parseDouble(jobPayRate.getText()), Double.parseDouble(jobOvertimeHours.getText()),
+				Double.parseDouble(jobOvertimeRate.getText()), Double.parseDouble(jobMaxHours.getText()),
+				Double.parseDouble(jobMinHours.getText()), jobTitle.getText());
+		
+		Database.Update.addJob(job);
+		
+		jobSearchResults.setText(Database.Read.searchJob());
+	}
+	
+	public void editJob(){
+		try {
+			job = new Job(Double.parseDouble(jobPayRate.getText()), Double.parseDouble(jobOvertimeHours.getText()),
+					Double.parseDouble(jobOvertimeRate.getText()), Double.parseDouble(jobMaxHours.getText()),
+					Double.parseDouble(jobMinHours.getText()), jobTitle.getText());
+			
+			Database.Update.updateJob(job);
+		} catch (NumberFormatException e) {		}
+		
+		jobSearchResults.setText(Database.Read.searchJob());
 	}
 
 	public void employeeEndShift() {

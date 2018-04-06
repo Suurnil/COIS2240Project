@@ -30,6 +30,10 @@ public class Job {
 	public Job(String title){
 		setTitle(title);
 	}
+	
+	public Job(){
+		
+	}
 
 	/* ***************************************************************
 	 * Getters

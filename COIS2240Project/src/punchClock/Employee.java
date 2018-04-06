@@ -109,8 +109,6 @@ public class Employee extends User {
 			/*
 			 * shift is over, so there is no longer a startTime
 			 */
-		} else {
-			System.out.println("Invalid startTime");	//would display in GUI
 		}
 	}
 	

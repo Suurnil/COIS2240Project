@@ -17,7 +17,7 @@ public class Database {
 	public Database() {
 
 		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:src\\punchClockDatabase.db");
+			conn = DriverManager.getConnection("jdbc:sqlite:punchClockDatabase.db");
 			statement = conn.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -51,6 +51,10 @@ public class Database {
 		try {
 			statement.execute(
 					"CREATE TABLE IF NOT EXISTS admin (idNum INTEGER NOT NULL, givenName TEXT, surname TEXT, FOREIGN KEY(idNum) REFERENCES user(idNum))");
+			
+			if(Validate.validateUserId(1) == false){
+				Update.addAdmin(new Administrator(1, "admin", "admin"));
+			}
 		} catch (SQLException e) {
 
 		}
@@ -102,8 +106,10 @@ public class Database {
 			try {
 				statement.executeUpdate("INSERT INTO admin (idNum, givenName, surname) VALUES (" + admin.getIdNum() + ", '"
 						+ admin.getGivenName() + "', '" + admin.getSurname() + "')");
+				
+				//System.out.println("added admin");
 			} catch (SQLException e) {
-
+				e.printStackTrace();
 			}
 		}
 
@@ -151,6 +157,7 @@ public class Database {
 		public static void addUser(User user) {
 			insertUser(user);
 			setUserId(user);
+			//System.out.println("added user");
 		}
 
 		public static void addEmployee(Employee employee) {
@@ -538,8 +545,6 @@ public class Database {
 							+ rs.getString("overtimeHours") + ", " + rs.getString("overtimeRate") + ", "
 							+ rs.getString("minHours") + ", " + rs.getString("maxHours") + "\n");
 				}
-				System.out.println(searchResults);
-				System.out.println("searched");
 				return searchResults;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -579,8 +584,6 @@ public class Database {
 							+ rs.getString("surname") + ", " + rs.getString("job") + ", "
 							+ rs.getString("startTime") + ", " + rs.getString("recHours") + ", " + rs.getString("recHoursTotal") + "\n");
 				}
-				System.out.println(searchResults);
-				System.out.println("searched");
 				return searchResults;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -601,8 +604,6 @@ public class Database {
 							+ rs.getString("surname") + ", " + rs.getString("job") + ", "
 							+ rs.getString("startTime") + ", " + rs.getString("recHours") + ", " + rs.getString("recHoursTotal") + "\n");
 				}
-				System.out.println(searchResults);
-				System.out.println("searched");
 				return searchResults;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -612,55 +613,5 @@ public class Database {
 			return searchResults;
 		}
 	}
-
-	/*
-	 * public void clearDB() throws SQLException{ statement.executeUpdate(
-	 * "DELETE FROM employee"); statement.executeUpdate("DELETE FROM job"); }
-	 */
-
-	/*
-	 * public Job readJob(String title) throws SQLException { rs =
-	 * statement.executeQuery("SELECT * FROM job WHERE title = '" + title +
-	 * "'");
-	 * 
-	 * if (rs.next()) { Job job = new Job(rs.getDouble("payRate"),
-	 * rs.getDouble("overtimeHours"), rs.getDouble("overtimeRate"),
-	 * rs.getDouble("maxHours"), rs.getDouble("minHours"), title); return job; }
-	 * return null; }
-	 */
-
-	/*
-	 * public void deleteJob(String title) throws SQLException{
-	 * statement.executeUpdate("DELETE FROM job WHERE title = '" + title + "'");
-	 * }
-	 */
-	/*
-	 * 
-	 * public Employee readEmployee(int idNum) throws SQLException { // reads
-	 * employee record with idNum, then reads job record with // resulting job;
-	 * returns new Employee with values in those records
-	 * 
-	 * rs = statement.executeQuery("Select * FROM employee WHERE idNum = " +
-	 * idNum);
-	 * 
-	 * if (rs.next()) { String givenName = rs.getString("givenName"); String
-	 * surname = rs.getString("surname"); LocalDateTime startTime; if
-	 * (rs.getString("startTime") != null) { startTime =
-	 * LocalDateTime.parse(rs.getString("startTime")); } else { startTime =
-	 * null; } double recHours = rs.getDouble("recHours"); double recHoursTotal
-	 * = rs.getDouble("recHoursTotal"); Employee employee = new Employee(idNum,
-	 * givenName, surname, startTime, recHours, recHoursTotal,
-	 * readJob(rs.getString("job"))); return employee; }else{ return null; } }
-	 * 
-	 * public void deleteEmployee(int idNum) throws SQLException{
-	 * statement.executeUpdate("DELETE FROM employee WHERE idNum = " + idNum); }
-	 * 
-	 * public int getNewIDNum() throws SQLException {
-	 * 
-	 * rs = statement.executeQuery("SELECT MAX(idNum) FROM employee");
-	 * 
-	 * return (rs.getInt(1) + 1);
-	 * 
-	 * }
-	 */
 }
+

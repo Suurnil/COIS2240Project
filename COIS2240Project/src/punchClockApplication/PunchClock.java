@@ -1,6 +1,7 @@
 package punchClockApplication;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,10 +20,10 @@ public class PunchClock extends Application{
 			
 			FXMLLoader loader = new FXMLLoader();
 			
-			String fxmlDocPath = "src/punchClockApplication/PunchClockView.fxml";
-			FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+			String fxmlDocPath = "PunchClockView.fxml";
+			//InputStream fxmlStream = PunchClock.class.getClassLoader().getResourceAsStream(fxmlDocPath);
 			
-			StackPane root = (StackPane) loader.load(fxmlStream);
+			StackPane root = (StackPane) loader.load(getClass().getClassLoader().getResourceAsStream(fxmlDocPath));
 			
 			Scene scene = new Scene(root);
 			
