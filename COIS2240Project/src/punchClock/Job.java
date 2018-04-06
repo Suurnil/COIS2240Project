@@ -26,6 +26,10 @@ public class Job {
 		setMinHours(job.getMinHours());
 		setTitle(job.getTitle());
 	}
+	
+	public Job(String title){
+		setTitle(title);
+	}
 
 	/* ***************************************************************
 	 * Getters

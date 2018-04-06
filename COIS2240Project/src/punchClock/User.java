@@ -5,6 +5,8 @@ public abstract class User {
 	private int idNum;
 	private String givenName;
 	private String surname;
+	
+	public User(){}
 
 	public User(int idNum, String givenName, String surname) {
 		this.idNum = idNum;

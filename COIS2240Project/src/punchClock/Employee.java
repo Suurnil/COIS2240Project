@@ -38,6 +38,9 @@ public class Employee extends User {
 	 * ***************************************************************
 	 */
 
+	public Employee() {
+	}
+
 	public double getRecHours() {
 		return recHours;
 	}

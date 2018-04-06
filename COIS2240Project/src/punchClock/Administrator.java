@@ -6,6 +6,10 @@ public class Administrator extends User {
 	/* *************************************************************************
 	 * Constructors
 	 * ************************************************************************* */
+	public Administrator(){
+		
+	}
+	
 	public Administrator(int idNum, String givenName, String surname) {
 		super(idNum, givenName, surname);
 	}
@@ -82,6 +86,6 @@ public class Administrator extends User {
 	
 	public void changeMinMaxHours(Job job, double minHours, double maxHours){
 		job.setMinHours(minHours);
-		job.setMinHours(minHours);
+		job.setMaxHours(maxHours);
 	}
 }
